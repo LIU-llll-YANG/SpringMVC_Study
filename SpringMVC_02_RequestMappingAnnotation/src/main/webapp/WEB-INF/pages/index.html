@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<h1>This is index.html....</h1>
+<a th:href="@{/test/success}">1. 测试请求映射注解加在类上测试</a><br>
+<a th:href="@{/test/win}">2. 测试多个请求路径</a><br>
+
+
+<!-- <a th:href="@{/success}">3. 测试method属性&ndash;&gt; get请求</a><br> -->
+<!-- <form th:action="@{/success}" method="post"> -->
+<!--     <input type="submit"> -->
+<!-- </form> -->
+<a th:href="@{/success(username='liuyang')}">4. 测param参数--> 带参数</a><br>
+<a th:href="@{/success}">4. 测param参数 --> 没带参数</a><br>
+
+</body>
+</html>
