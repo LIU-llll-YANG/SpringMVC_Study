@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>员工信息</title>
+    <!-- <link rel="stylesheet" th:src="@{/static/css/table.css}"> -->
+    <link rel="stylesheet" th:href="@{/static/css/index_like.css}">
+    <!-- <style> -->
+    <!--     -->
+    <!-- </style> -->
+    <script type="text/javascript" th:src="@{/static/js/vue.js}"></script>
+</head>
+<body>
+<div id="dataTable">
+    <table>
+        <tr>
+            <td colspan="5" align="center">员工信息</td>
+        </tr>
+        <tr>
+            <td>员工编号</td>
+            <td>员工姓名</td>
+            <td>员工邮箱</td>
+            <td>员工性别</td>
+            <td>选项(<a th:href="@{/toAdd}">添加员工</a>)</td>
+        </tr>
+
+        <tr th:each="employee : ${employees}">
+            <td th:text="${employee.id}"></td>
+            <td th:text="${employee.lastName}"></td>
+            <td th:text="${employee.email}"></td>
+            <td th:text="${employee.gender}"></td>
+            <td>
+                <a class="deleteA" @click="deleteEmployee" th:href="@{'/employee/'+${employee.id}}">删除</a>
+                <a th:href="@{'/employee/'+${employee.id}}">修改</a>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+<!-- 作用：通过超链接控制表单的提交，将post请求转换为delete请求 -->
+<form id="delete_form" method="post">
+    <!-- HiddenHttpMethodFilter要求：必须传输_method请求参数，并且值为最终的请求方式 -->
+    <input type="hidden" name="_method" value="delete"/>
+</form>
+
+<script type="text/javascript">
+    var vue = new Vue({
+        el: "#dataTable",
+        methods: {
+            //event表示当前事件
+            deleteEmployee: function (event) {
+                //通过id获取表单标签
+                var delete_form = document.getElementById("delete_form");
+                //将触发事件的超链接的href属性为表单的action属性赋值
+                delete_form.action = event.target.href;
+                //提交表单
+                delete_form.submit();
+                //阻止超链接的默认跳转行为
+                event.preventDefault();
+            }
+        }
+    });
+</script>
+</body>
+</html>
